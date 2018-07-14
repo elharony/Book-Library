@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 import escapeStringRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
+import Book from "./Book";
 
 class SearchBook extends Component {
 
@@ -11,26 +12,13 @@ class SearchBook extends Component {
         query: '',
         books: []
     }
-
-    // Return All Books
-    showAll = () => {
+    componentDidMount() {
         BooksAPI.getAll().then((books) => {
             this.setState({books})
         })
     }
-
-    // Display All Books When App Loaded
-    componentDidMount() {
-        this.showAll()
-    }
-
-    // Update Book's Shelf
-    changeShelf = (book, currentShelf) => {
-        BooksAPI.update(book, currentShelf)
-            .then(
-                (result) => console.log(result)
-            )
-            .then(this.showAll())
+    updateQuery = (query) => {
+        this.setState({ query })
     }
 
     render() {
@@ -60,24 +48,7 @@ class SearchBook extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {displayedBooks.map((book) => (
-                            <li key={book.id}>
-                                <div className="book">
-                                    <div className="book-top">
-                                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                                        <div className="book-shelf-changer">
-                                            <select onChange={(e) => this.changeShelf(book, e.target.value)}>
-                                                <option value="move" disabled>Move to...</option>
-                                                <option value="currentlyReading">Currently Reading</option>
-                                                <option value="wantToRead">Want to Read</option>
-                                                <option value="read">Read</option>
-                                                <option value="none">None</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="book-title">{book.title}</div>
-                                    <div className="book-authors">{book.authors.join(', ')}</div>
-                                </div>
-                            </li>
+                            <Book thisBook={book}/>
                         ))}
                     </ol>
                 </div>
