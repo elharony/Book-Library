@@ -10,7 +10,7 @@
         books: []
       }
 
-      // Return All Books
+        // Return All Books
         showAll = () => {
             BooksAPI.getAll().then((books) => {
                 this.setState({books})
@@ -22,19 +22,10 @@
             this.showAll()
         }
 
-        // Update Book's Shelf
-        changeShelf = (book, currentShelf) => {
-            BooksAPI.update(book, currentShelf)
-                .then(
-                    (result) => console.log(result)
-                )
-                .then(this.showAll())
-        }
-
       render() {
           return (
           <div className="app">
-              <Route exact path='/' render={ () => <ListBooks books={this.state.books}/> } />
+              <Route exact path='/' render={ () => <ListBooks books={this.state.books} showAll={this.showAll()}/> } />
               <Route path='/search' render={ () => <SearchBook/> }/>
           </div>
         )
