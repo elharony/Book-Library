@@ -11,13 +11,26 @@ class SearchBook extends Component {
         query: '',
         books: []
     }
-    componentDidMount() {
+
+    // Return All Books
+    showAll = () => {
         BooksAPI.getAll().then((books) => {
             this.setState({books})
         })
     }
-    updateQuery = (query) => {
-        this.setState({ query })
+
+    // Display All Books When App Loaded
+    componentDidMount() {
+        this.showAll()
+    }
+
+    // Update Book's Shelf
+    changeShelf = (book, currentShelf) => {
+        BooksAPI.update(book, currentShelf)
+            .then(
+                (result) => console.log(result)
+            )
+            .then(this.showAll())
     }
 
     render() {
@@ -52,7 +65,7 @@ class SearchBook extends Component {
                                     <div className="book-top">
                                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                         <div className="book-shelf-changer">
-                                            <select>
+                                            <select onChange={(e) => this.changeShelf(book, e.target.value)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>
