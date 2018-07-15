@@ -13,9 +13,7 @@ class Book extends Component {
     // Update Book's Shelf
     changeShelf = (book, currentShelf) => {
         BooksAPI.update(book, currentShelf)
-            .then(
-                (result) => console.log(result)
-            )
+            .then((result) => console.log(result))
             .then(this.showAll())
     }
 
@@ -29,7 +27,8 @@ class Book extends Component {
                     <div className="book-top">
                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thisBook.imageLinks.thumbnail})` }}></div>
                         <div className="book-shelf-changer">
-                            <select onChange={ (e) => this.changeShelf(thisBook, e.target.value)} value={thisBook.shelf}>
+                            <select onChange={(e) => {this.changeShelf(thisBook, e.target.value)}}
+                                    value={thisBook.shelf}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -39,7 +38,7 @@ class Book extends Component {
                         </div>
                     </div>
                     <div className="book-title">{thisBook.title}</div>
-                    <div className="book-authors">{thisBook.authors.join(', ')}</div>
+                    <div className="book-authors">{thisBook.authors ? thisBook.authors.toString() : 'Nothing!'}</div>
                 </div>
             </li>
         )
