@@ -12,8 +12,6 @@ class SearchBook extends Component {
     }
 
 
-
-
     updateQuery = (query) => {
         if(query) {
             this.setState({ query })
@@ -56,7 +54,7 @@ class SearchBook extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {books.map((book) => (
-                            <Book thisBook={book}/>
+                            <Book thisBook={book} bookShelf={'none'}/>
                         ))}
                     </ol>
                 </div>

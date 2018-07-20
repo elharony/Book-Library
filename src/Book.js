@@ -19,7 +19,7 @@ class Book extends Component {
 
     render() {
 
-        const {thisBook} = this.props
+        const {thisBook, bookShelf} = this.props
 
         if(thisBook.imageLinks) {
             return(
@@ -40,7 +40,7 @@ class Book extends Component {
                             </div>
                             <div className="book-shelf-changer">
                                 <select onChange={(e) => {this.changeShelf(thisBook, e.target.value)}}
-                                        value={thisBook.shelf}>
+                                        value={bookShelf}>
                                     <option value="move" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>
