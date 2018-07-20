@@ -52,6 +52,7 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
+                    <h2>{books.length !== 0 ? `${books.length} Books Found!` : `Nothing found....`}</h2>
                     <ol className="books-grid">
                         {books.map((book) => (
                             <Book thisBook={book} bookShelf={'none'}/>
