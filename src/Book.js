@@ -13,7 +13,6 @@ class Book extends Component {
     // Update Book's Shelf
     changeShelf = (book, currentShelf) => {
         BooksAPI.update(book, currentShelf)
-            .then((result) => console.log(result))
             .then(this.showAll())
     }
 
