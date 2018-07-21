@@ -8,7 +8,18 @@ class SearchBook extends Component {
     // State Management
     state = {
         query: '',
-        books: []
+        books: [],
+        shelvedBooks: []
+    }
+
+    // Save The Books that were asigned to a shelf
+    showAll = () => {
+        BooksAPI.getAll().then((shelvedBooks) => {
+            this.setState({shelvedBooks})
+        })
+    }
+    componentWillMount() {
+        this.showAll();
     }
 
 
@@ -21,6 +32,16 @@ class SearchBook extends Component {
                         books: []
                     })
                 } else {
+
+                    // Search Results
+                    result.map((book) => {
+                        book.shelf = 'none'
+                        this.state.shelvedBooks.map((shelvedBook) => {
+                            if(shelvedBook.id === book.id) {
+                                book.shelf = shelvedBook.shelf
+                            }
+                        })
+                    })
                     this.setState({books: result})
                 }
             }).catch(error => {
@@ -55,7 +76,7 @@ class SearchBook extends Component {
                     <h2>{query !== '' ? `${books.length} Books Found!` : ``}</h2>
                     <ol className="books-grid">
                         {books.map((book) => (
-                            <Book thisBook={book} bookShelf={'none'}/>
+                            <Book thisBook={book} bookShelf={book.shelf}/>
                         ))}
                     </ol>
 
